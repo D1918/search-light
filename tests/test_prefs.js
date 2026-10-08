@@ -85,16 +85,16 @@ class PrefKeys {
       let signal_id = null;
       key.object = builder.get_object(key.name);
       switch (key.widget_type) {
-        case 'switch': {
-          signal_id = key.object.connect('state-set', (w) => {
+        case "switch": {
+          signal_id = key.object.connect("state-set", (w) => {
             let value = w.get_active();
             self.setValue(name, value);
             // print(value);
           });
           break;
         }
-        case 'dropdown': {
-          signal_id = key.object.connect('notify::selected-item', (w) => {
+        case "dropdown": {
+          signal_id = key.object.connect("notify::selected-item", (w) => {
             let index = w.get_selected();
             let value = index in key.maps ? key.maps[index] : index;
             self.setValue(name, value);
@@ -102,16 +102,16 @@ class PrefKeys {
           });
           break;
         }
-        case 'scale': {
-          signal_id = key.object.connect('value-changed', (w) => {
+        case "scale": {
+          signal_id = key.object.connect("value-changed", (w) => {
             let value = w.get_value();
             self.setValue(name, value);
             // print(value);
           });
           break;
         }
-        case 'color': {
-          signal_id = key.object.connect('color-set', (w) => {
+        case "color": {
+          signal_id = key.object.connect("color-set", (w) => {
             let rgba = w.get_rgba();
             let value = [rgba.red, rgba.green, rgba.blue, rgba.alpha];
             print(value);
@@ -119,8 +119,8 @@ class PrefKeys {
           });
           break;
         }
-        case 'button': {
-          signal_id = key.object.connect('clicked', (w) => {
+        case "button": {
+          signal_id = key.object.connect("clicked", (w) => {
             if (key.callback) {
               key.callback();
             }
@@ -167,9 +167,9 @@ function find(n, name) {
 }
 
 function dump(n, l) {
-  let s = '';
+  let s = "";
   for (let i = 0; i < l; i++) {
-    s += ' ';
+    s += " ";
   }
   print(`${s}${n.get_name()}`);
   let c = n.get_first_child();
@@ -182,29 +182,29 @@ function dump(n, l) {
 function add_window_row(placeholder) {
   let builder = new Gtk.Builder();
   builder.add_from_file(`ui/window-row.ui`);
-  let row = builder.get_object('window-row-template');
+  let row = builder.get_object("window-row-template");
   row._index = 0;
   placeholder.add(row);
 
   print(placeholder.children);
 
-  let remove_button = builder.get_object('remove-window');
-  remove_button.connect('clicked', () => {
+  let remove_button = builder.get_object("remove-window");
+  remove_button.connect("clicked", () => {
     placeholder.remove(row);
   });
 }
 
 let app = new Adw.Application({
-  application_id: 'com.search-light.GtkApplication',
+  application_id: "com.search-light.GtkApplication",
 });
 
-app.connect('activate', (me) => {
+app.connect("activate", (me) => {
   m = new Gtk.ApplicationWindow({ application: me });
   m.set_default_size(600, 250);
-  m.set_title('Prefs Test');
+  m.set_title("Prefs Test");
 
   let iconTheme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
-  iconTheme.add_search_path('ui/icons');
+  iconTheme.add_search_path("ui/icons");
 
   w = new Adw.PreferencesWindow();
   // w.add(new Adw.PreferencesPage());
@@ -213,12 +213,12 @@ app.connect('activate', (me) => {
   builder.add_from_file(`ui/general.ui`);
   builder.add_from_file(`ui/appearance.ui`);
   builder.add_from_file(`ui/menu.ui`);
-  w.add(builder.get_object('general'));
-  w.add(builder.get_object('appearance'));
+  w.add(builder.get_object("general"));
+  w.add(builder.get_object("appearance"));
 
-  let menu_util = builder.get_object('menu_util');
+  let menu_util = builder.get_object("menu_util");
   w.add(menu_util);
-  w.title = 'Search Light';
+  w.title = "Search Light";
 
   // const page = builder.get_object('menu_util');
   // const pages_stack = page.get_parent(); // AdwViewStack
@@ -227,35 +227,35 @@ app.connect('activate', (me) => {
   // const headerbar = preferences.get_first_child(); // AdwHeaderBar
   // headerbar.pack_start(builder.get_object('info_menu'));
 
-  let headerbar = find(w, 'AdwHeaderBar');
+  let headerbar = find(w, "AdwHeaderBar");
   if (!headerbar) {
     return;
   }
-  headerbar.pack_start(builder.get_object('info_menu'));
+  headerbar.pack_start(builder.get_object("info_menu"));
 
   // setup menu actions
   const actionGroup = new Gio.SimpleActionGroup();
-  w.insert_action_group('prefs', actionGroup);
+  w.insert_action_group("prefs", actionGroup);
 
   // a list of actions with their associated link
   const actions = [
     {
-      name: 'open-bug-report',
-      link: 'https://github.com/icedman/dash2dock-lite/issues',
+      name: "open-bug-report",
+      link: "https://github.com/d1918/dash2dock-lite/issues",
     },
     {
-      name: 'open-readme',
-      link: 'https://github.com/icedman/dash2dock-lite',
+      name: "open-readme",
+      link: "https://github.com/d1918/dash2dock-lite",
     },
     {
-      name: 'open-license',
-      link: 'https://github.com/icedman/dash2dock-lite/blob/master/LICENSE',
+      name: "open-license",
+      link: "https://github.com/d1918/dash2dock-lite/blob/master/LICENSE",
     },
   ];
 
   actions.forEach((action) => {
     let act = new Gio.SimpleAction({ name: action.name });
-    act.connect('activate', (_) =>
+    act.connect("activate", (_) =>
       Gtk.show_uri(w, action.link, Gdk.CURRENT_TIME),
     );
     actionGroup.add_action(act);
@@ -270,7 +270,7 @@ app.connect('activate', (me) => {
   //   // print('reset');
   // };
 
-  w.connect('close_request', () => {
+  w.connect("close_request", () => {
     m.close();
     app.quit();
   });
@@ -280,6 +280,6 @@ app.connect('activate', (me) => {
   // m.present();
 });
 
-app.connect('startup', () => {});
+app.connect("startup", () => {});
 
-app.run(['xx']);
+app.run(["xx"]);

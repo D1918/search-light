@@ -9,11 +9,11 @@
   </p>
 </p>
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/icedman)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/d1918)
 
-![Contributors](https://img.shields.io/github/contributors/icedman/search-light?color=dark-green) ![Forks](https://img.shields.io/github/forks/icedman/search-light?style=social) ![Stargazers](https://img.shields.io/github/stars/icedman/search-light?style=social) ![Issues](https://img.shields.io/github/issues/icedman/search-light) ![License](https://img.shields.io/github/license/icedman/search-light) 
+![Contributors](https://img.shields.io/github/contributors/d1918/search-light?color=dark-green) ![Forks](https://img.shields.io/github/forks/d1918/search-light?style=social) ![Stargazers](https://img.shields.io/github/stars/d1918/search-light?style=social) ![Issues](https://img.shields.io/github/issues/d1918/search-light) ![License](https://img.shields.io/github/license/d1918/search-light) 
 
-![First Release](https://raw.githubusercontent.com/icedman/search-light/main/screenshots/Screenshot%20from%202022-11-03%2011-53-28.png)
+![First Release](https://raw.githubusercontent.com/d1918/search-light/main/screenshots/Screenshot%20from%202022-11-03%2011-53-28.png)
 
 
 This is a Gnome Shell extension that takes the apps search widget out of Overview. Like the macOS spotlight, or Alfred.
@@ -42,7 +42,7 @@ Blurred background feature requires **imagemagick** to be installed in the syste
 Manual Installation: 
 - Clone this repo
 ```bash
-$ git clone https://github.com/icedman/search-light
+$ git clone https://github.com/d1918/search-light
 ```
 - Use the `Makefile` to build and install
 ```bash 

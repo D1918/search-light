@@ -1,17 +1,17 @@
 // Adapted from from Blur-My-Shell
 
-'use strict';
+"use strict";
 
-import Shell from 'gi://Shell';
-import GLib from 'gi://GLib';
-import GObject from 'gi://GObject';
-import Clutter from 'gi://Clutter';
+import Shell from "gi://Shell";
+import GLib from "gi://GLib";
+import GObject from "gi://GObject";
+import Clutter from "gi://Clutter";
 
 const getTintShaderSource = (extensionDir) => {
   const SHADER_PATH = GLib.build_filenamev([
     extensionDir,
-    'effects',
-    'tint_effect.glsl',
+    "effects",
+    "tint_effect.glsl",
   ]);
 
   try {
@@ -57,7 +57,7 @@ export const TintEffect = GObject.registerClass(
     preload(path) {
       // set shader source
       this._source = getTintShaderSource(path);
-      if (this._source) this.set_shader_source(this._source);
+      // if (this._source) this.set_shader_source(this._source);
 
       this.update_enabled();
     }
@@ -70,7 +70,7 @@ export const TintEffect = GObject.registerClass(
       if (this._red !== value) {
         this._red = value;
 
-        this.set_uniform_value('red', parseFloat(this._red - 1e-6));
+        this.set_uniform_value("red", parseFloat(this._red - 1e-6));
       }
     }
 
@@ -82,7 +82,7 @@ export const TintEffect = GObject.registerClass(
       if (this._green !== value) {
         this._green = value;
 
-        this.set_uniform_value('green', parseFloat(this._green - 1e-6));
+        this.set_uniform_value("green", parseFloat(this._green - 1e-6));
       }
     }
 
@@ -94,7 +94,7 @@ export const TintEffect = GObject.registerClass(
       if (this._blue !== value) {
         this._blue = value;
 
-        this.set_uniform_value('blue', parseFloat(this._blue - 1e-6));
+        this.set_uniform_value("blue", parseFloat(this._blue - 1e-6));
       }
     }
 
@@ -112,7 +112,7 @@ export const TintEffect = GObject.registerClass(
       if (this._blend !== value) {
         this._blend = value;
 
-        this.set_uniform_value('blend', parseFloat(this._blend - 1e-6));
+        this.set_uniform_value("blend", parseFloat(this._blend - 1e-6));
       }
       this.update_enabled();
     }
@@ -139,7 +139,7 @@ export const TintEffect = GObject.registerClass(
     }
 
     vfunc_paint_target(paint_node = null, paint_context = null) {
-      this.set_uniform_value('tex', 0);
+      this.set_uniform_value("tex", 0);
 
       if (paint_node && paint_context)
         super.vfunc_paint_target(paint_node, paint_context);

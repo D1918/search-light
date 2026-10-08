@@ -1,17 +1,17 @@
 // Adapted from from Blur-My-Shell
 
-'use strict';
+"use strict";
 
-import Shell from 'gi://Shell';
-import GLib from 'gi://GLib';
-import GObject from 'gi://GObject';
-import Clutter from 'gi://Clutter';
+import Shell from "gi://Shell";
+import GLib from "gi://GLib";
+import GObject from "gi://GObject";
+import Clutter from "gi://Clutter";
 
 const getColorEffectShaderSource = (extensionDir) => {
   const SHADER_PATH = GLib.build_filenamev([
     extensionDir,
-    'effects',
-    'color_effect.glsl',
+    "effects",
+    "color_effect.glsl",
   ]);
 
   try {
@@ -56,7 +56,7 @@ export const ColorEffect = GObject.registerClass(
     preload(path) {
       // set shader source
       this._source = getColorEffectShaderSource(path);
-      if (this._source) this.set_shader_source(this._source);
+      // if (this._source) this.set_shader_source(this._source);
 
       this.update_enabled();
     }
@@ -69,7 +69,7 @@ export const ColorEffect = GObject.registerClass(
       if (this._red !== value) {
         this._red = value;
 
-        this.set_uniform_value('red', parseFloat(this._red - 1e-6));
+        this.set_uniform_value("red", parseFloat(this._red - 1e-6));
       }
     }
 
@@ -81,7 +81,7 @@ export const ColorEffect = GObject.registerClass(
       if (this._green !== value) {
         this._green = value;
 
-        this.set_uniform_value('green', parseFloat(this._green - 1e-6));
+        this.set_uniform_value("green", parseFloat(this._green - 1e-6));
       }
     }
 
@@ -93,7 +93,7 @@ export const ColorEffect = GObject.registerClass(
       if (this._blue !== value) {
         this._blue = value;
 
-        this.set_uniform_value('blue', parseFloat(this._blue - 1e-6));
+        this.set_uniform_value("blue", parseFloat(this._blue - 1e-6));
       }
     }
 
@@ -105,7 +105,7 @@ export const ColorEffect = GObject.registerClass(
       if (this._blend !== value) {
         this._blend = value;
 
-        this.set_uniform_value('blend', parseFloat(this._blend - 1e-6));
+        this.set_uniform_value("blend", parseFloat(this._blend - 1e-6));
       }
       this.update_enabled();
     }
@@ -132,7 +132,7 @@ export const ColorEffect = GObject.registerClass(
     }
 
     vfunc_paint_target(paint_node = null, paint_context = null) {
-      this.set_uniform_value('tex', 0);
+      this.set_uniform_value("tex", 0);
 
       if (paint_node && paint_context)
         super.vfunc_paint_target(paint_node, paint_context);

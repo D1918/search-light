@@ -1,20 +1,20 @@
 // loosely based on JustPerfection & Blur-My-Shell
 
-import Gdk from 'gi://Gdk';
-import Gtk from 'gi://Gtk';
-import Gio from 'gi://Gio';
+import Gdk from "gi://Gdk";
+import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
 
-import { ShortcutSettingWidget } from './shortcuts.js';
+import { ShortcutSettingWidget } from "./shortcuts.js";
 
-const GETTEXT_DOMAIN = 'search-light';
+const GETTEXT_DOMAIN = "search-light";
 
-import { schemaId, SettingsKeys } from './preferences/keys.js';
-import { MonitorsConfig } from './monitors.js';
+import { schemaId, SettingsKeys } from "./preferences/keys.js";
+import { MonitorsConfig } from "./monitors.js";
 
 import {
   ExtensionPreferences,
   gettext as _,
-} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+} from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
 export default class Preferences extends ExtensionPreferences {
   constructor(metadata) {
@@ -41,9 +41,9 @@ export default class Preferences extends ExtensionPreferences {
   }
 
   dump(n, l) {
-    let s = '';
+    let s = "";
     for (let i = 0; i < l; i++) {
-      s += ' ';
+      s += " ";
     }
     print(`${s}${n.get_name()}`);
     let c = n.get_first_child();
@@ -61,39 +61,39 @@ export default class Preferences extends ExtensionPreferences {
     // gwc.visible = false;
     // console.log(gwc);
 
-    let headerbar = this.find(window, 'AdwHeaderBar');
+    let headerbar = this.find(window, "AdwHeaderBar");
     if (!headerbar) {
       return;
     }
-    headerbar.pack_start(builder.get_object('info_menu'));
+    headerbar.pack_start(builder.get_object("info_menu"));
 
     // setup menu actions
     const actionGroup = new Gio.SimpleActionGroup();
-    window.insert_action_group('prefs', actionGroup);
+    window.insert_action_group("prefs", actionGroup);
 
     // a list of actions with their associated link
     const actions = [
       {
-        name: 'open-bug-report',
-        link: 'https://github.com/icedman/search-light/issues',
+        name: "open-bug-report",
+        link: "https://github.com/d1918/search-light/issues",
       },
       {
-        name: 'open-readme',
-        link: 'https://github.com/icedman/search-light',
+        name: "open-readme",
+        link: "https://github.com/d1918/search-light",
       },
       {
-        name: 'open-buy-coffee',
-        link: 'https://www.buymeacoffee.com/icedman',
+        name: "open-buy-coffee",
+        link: "https://www.buymeacoffee.com/d1918",
       },
       {
-        name: 'open-license',
-        link: 'https://github.com/icedman/search-light/blob/master/LICENSE',
+        name: "open-license",
+        link: "https://github.com/d1918/search-light/blob/master/LICENSE",
       },
     ];
 
     actions.forEach((action) => {
       let act = new Gio.SimpleAction({ name: action.name });
-      act.connect('activate', (_) =>
+      act.connect("activate", (_) =>
         Gtk.show_uri(window, action.link, Gdk.CURRENT_TIME),
       );
       actionGroup.add_action(act);
@@ -115,14 +115,14 @@ export default class Preferences extends ExtensionPreferences {
     builder.add_from_file(`${UIFolderPath}/appearance.ui`);
     builder.add_from_file(`${UIFolderPath}/accelerator.ui`);
     builder.add_from_file(`${UIFolderPath}/menu.ui`);
-    window.add(builder.get_object('general'));
-    window.add(builder.get_object('appearance'));
+    window.add(builder.get_object("general"));
+    window.add(builder.get_object("appearance"));
     window.set_search_enabled(true);
 
-    if (builder.get_object('qr')) {
+    if (builder.get_object("qr")) {
       builder
-        .get_object('qr')
-        .set_from_file(`${UIFolderPath}/images/qr_icedman.png`);
+        .get_object("qr")
+        .set_from_file(`${UIFolderPath}/images/qr_d1918.png`);
     }
 
     // builder.get_object("providers-group").visible = false;
@@ -136,16 +136,16 @@ export default class Preferences extends ExtensionPreferences {
     this.addMenu(window, builder);
 
     this._monitorsConfig = new MonitorsConfig();
-    this._monitorsConfig.connect('updated', () => this.updateMonitors());
+    this._monitorsConfig.connect("updated", () => this.updateMonitors());
 
     // shortcuts widget
     {
-      let placeholder = builder.get_object('shortcut-search-placeholder');
+      let placeholder = builder.get_object("shortcut-search-placeholder");
       placeholder.append(
         new ShortcutSettingWidget(
-          builder.get_object('accelerator'),
+          builder.get_object("accelerator"),
           settings,
-          'shortcut-search',
+          "shortcut-search",
           window,
         ),
       );
@@ -153,13 +153,13 @@ export default class Preferences extends ExtensionPreferences {
 
     {
       let placeholder = builder.get_object(
-        'secondary-shortcut-search-placeholder',
+        "secondary-shortcut-search-placeholder",
       );
       placeholder.append(
         new ShortcutSettingWidget(
-          builder.get_object('accelerator'),
+          builder.get_object("accelerator"),
           settings,
-          'secondary-shortcut-search',
+          "secondary-shortcut-search",
           window,
         ),
       );
@@ -173,11 +173,11 @@ export default class Preferences extends ExtensionPreferences {
     let monitors = this._monitorsConfig.monitors;
     let count = monitors.length;
     let list = new Gtk.StringList();
-    list.append('Primary Monitor');
+    list.append("Primary Monitor");
     for (let i = 0; i < count; i++) {
       let m = monitors[i];
       list.append(m.displayName);
     }
-    this._builder.get_object('preferred-monitor').set_model(list);
+    this._builder.get_object("preferred-monitor").set_model(list);
   }
 }
